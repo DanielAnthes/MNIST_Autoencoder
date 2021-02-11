@@ -19,7 +19,7 @@ train_summary_writer.set_as_default()
 #### HYPERPARAMETERS ###
 
 BATCHSIZE = 400 
-DATASET_REPS = 400
+DATASET_REPS = 1
 
 ### DATA ###
 
@@ -61,4 +61,6 @@ for X in dataset:
 
 Z, R = model(X_train[:,:,:,None])
 fig = plot_latent_space(Z, label_train)
-plt.savefig("latentspace.png")
+
+fig2 = plot_reconst(X_train[0:5], R[0:5].numpy().squeeze())
+plt.show()
