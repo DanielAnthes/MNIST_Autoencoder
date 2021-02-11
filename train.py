@@ -59,4 +59,6 @@ for X in dataset:
     with train_summary_writer.as_default():
         tf.summary.scalar('loss', loss, step=i)
 
-
+Z, R = model(X_train[:,:,:,None])
+fig = plot_latent_space(Z, label_train)
+plt.savefig("latentspace.png")
