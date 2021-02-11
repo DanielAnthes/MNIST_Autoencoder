@@ -38,5 +38,14 @@ class AAE(tf.keras.Model):
         x = self.deconv3(x)
         return x
 
+    def loss(self, x, r):
+        ssqr = tf.math.square(x - r)
+        reconstr_loss = tf.math.reduce_sum(ssqr)
+        return reconstr_loss
+
     def call(self,x):
-        pass
+        z = self.encode(x)
+        r = self.decode(z)
+        return z, r
+
+
