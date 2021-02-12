@@ -1,10 +1,16 @@
 import matplotlib.pyplot as plt
 
-def plot_latent_space(X, classes):
-    fig = plt.figure()
-    ax = plt.subplot(111)
-    ax.scatter(X[:,0], X[:,1], c=classes)
+
+def plot_latent_space(X, labels):
+    classes = np.unique(labels)
+    fig = plt.figure(figsize=(12,8))
+    for c in classes:
+        samples = X[labels == c, :]
+        print(samples.shape)
+        plt.scatter(samples[:,0], samples[:,1], label=str(c), marker='.', alpha=.8)
+    plt.legend()
     return fig
+
 
 def plot_reconst(x,r):
     nimgs = x.shape[0]
