@@ -65,6 +65,7 @@ for X in dataset:
 
 Z, R = model(X_train[:,:,:,None])
 fig = plot_latent_space(Z, label_train)
-
+plt.savefig("latentspace.png")
 fig2 = plot_reconst(X_train[0:5], R[0:5].numpy().squeeze())
+plt.savefig("reconst.png")
 plt.show()
