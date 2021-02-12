@@ -8,6 +8,10 @@ from AAE import AAE
 from util import plot_reconst, plot_latent_space
 import datetime
 
+devices = tf.config.list_physical_devices('GPU') 
+print(devices)
+
+
 ### LOGGING ###
 
 current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -19,7 +23,7 @@ train_summary_writer.set_as_default()
 #### HYPERPARAMETERS ###
 
 BATCHSIZE = 400 
-DATASET_REPS = 1
+DATASET_REPS = 100
 
 ### DATA ###
 
@@ -36,7 +40,7 @@ print(f"DATASET SIZE: {n_data}\nBATCHSIZE: {BATCHSIZE}\nDATASET REPS: {DATASET_R
 ### MODEL ###
 
 model = AAE()
-optimizer = tf.keras.optimizers.SGD()
+optimizer = tf.keras.optimizers.Adam()
 
 ### TRAINING ###
 
