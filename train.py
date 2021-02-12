@@ -23,7 +23,7 @@ train_summary_writer.set_as_default()
 #### HYPERPARAMETERS ###
 
 BATCHSIZE = 400 
-DATASET_REPS = 100
+DATASET_REPS = 50
 
 ### DATA ###
 
@@ -62,6 +62,9 @@ for X in dataset:
     i += 1
     with train_summary_writer.as_default():
         tf.summary.scalar('loss', loss, step=i)
+
+# save model weights
+model.save_weights("./mnist_aae" + current_time)
 
 Z, R = model(X_train[:,:,:,None])
 fig = plot_latent_space(Z, label_train)

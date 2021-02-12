@@ -48,4 +48,7 @@ class AAE(tf.keras.Model):
         r = self.decode(z)
         return z, r
 
+    def load(self, name="mnist_aae"):
+      self.load_weights(name)
+
 
