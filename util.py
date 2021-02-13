@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def plot_latent_space(X, labels):
@@ -6,7 +7,6 @@ def plot_latent_space(X, labels):
     fig = plt.figure(figsize=(12,8))
     for c in classes:
         samples = X[labels == c, :]
-        print(samples.shape)
         plt.scatter(samples[:,0], samples[:,1], label=str(c), marker='.', alpha=.8)
     plt.legend()
     return fig

@@ -39,7 +39,7 @@ print(f"DATASET SIZE: {n_data}\nBATCHSIZE: {BATCHSIZE}\nDATASET REPS: {DATASET_R
 
 ### MODEL ###
 
-model = AAE()
+model = AAE(n_latent=6)
 optimizer = tf.keras.optimizers.Adam()
 
 ### TRAINING ###
@@ -64,11 +64,11 @@ for X in dataset:
         tf.summary.scalar('loss', loss, step=i)
 
 # save model weights
-model.save_weights("./mnist_aae" + current_time)
+model.save_weights("./mnist_aae_6d" + current_time)
 
-Z, R = model(X_train[:,:,:,None])
-fig = plot_latent_space(Z, label_train)
-plt.savefig("latentspace.png")
-fig2 = plot_reconst(X_train[0:5], R[0:5].numpy().squeeze())
-plt.savefig("reconst.png")
-plt.show()
+# Z, R = model(X_train[:,:,:,None])
+# fig = plot_latent_space(Z, label_train)
+# plt.savefig("latentspace.png")
+# fig2 = plot_reconst(X_train[0:5], R[0:5].numpy().squeeze())
+# plt.savefig("reconst.png")
+# plt.show()

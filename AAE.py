@@ -6,16 +6,18 @@ tfd = tfp.distributions
 
 class AAE(tf.keras.Model):
 
-    def __init__(self):
+    def __init__(self, n_latent=2):
 
         super(AAE, self).__init__()
+
+        self.N = n_latent
 
         self.conv1 = tf.keras.layers.Conv2D(filters=8, kernel_size=3, strides=3, activation='relu') 
         self.conv2 = tf.keras.layers.Conv2D(filters=16, kernel_size=3, strides=3, activation='relu')
         self.conv3 = tf.keras.layers.Conv2D(filters=32, kernel_size=3, strides=1, activation='relu')
-        self.encode_dense = tf.keras.layers.Dense(2, activation='relu')
+        self.encode_dense = tf.keras.layers.Dense(self.N, activation='relu')
 
-        self.reconst_dense = tf.keras.layers.Dense(2, activation='relu')
+        self.reconst_dense = tf.keras.layers.Dense(8, activation='relu')
 
         self.deconv1 = tf.keras.layers.Conv2DTranspose(filters=8, kernel_size=4, strides=1, activation='relu')
         self.deconv2 = tf.keras.layers.Conv2DTranspose(filters=4, kernel_size=3, strides=2, activation='relu')
@@ -32,7 +34,7 @@ class AAE(tf.keras.Model):
 
     def decode(self, x):
         x = self.reconst_dense(x)
-        x = tf.reshape(x, [-1, 1, 1, 2])
+        x = tf.reshape(x, [-1, 1, 1, 8])
         x = self.deconv1(x)
         x = self.deconv2(x)
         x = self.deconv3(x)
