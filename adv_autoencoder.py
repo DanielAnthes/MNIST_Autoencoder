@@ -15,11 +15,8 @@ class AAE(tf.keras.Model):
 
     def encode(self,X):
         nbatch = X.shape[0]
-        print(X.shape)
         X = self.conv1(X)
-        print(X.shape)
         X = tf.reshape(X, [nbatch, -1])
-        print(X.shape)
         X = self.fc1(X)
         return X
 
@@ -27,10 +24,8 @@ class AAE(tf.keras.Model):
     def decode(self,X):
         nbatch = X.shape[0]
         X = self.fc2(X)
-        print(X.shape)
         X = tf.reshape(X, [nbatch, 13, 13, 8])
         X = self.deconv1(X)
-        print(X.shape)
         return X
 
     def call(self, X):
@@ -38,4 +33,10 @@ class AAE(tf.keras.Model):
         R = self.decode(Z)
 
         return Z,R
-        
+    
+    def loss(self, X, R):
+        ssqr = tf.math.square(X - R)
+        reconstruction_loss = tf.math.reduce_sum(ssqr)
+        return reconstruction_loss
+
+

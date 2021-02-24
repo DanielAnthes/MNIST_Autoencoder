@@ -19,7 +19,7 @@ train_summary_writer.set_as_default()
 #### HYPERPARAMETERS ###
 
 BATCHSIZE = 400 
-DATASET_REPS = 1
+DATASET_REPS = 20
 
 ### DATA ###
 
