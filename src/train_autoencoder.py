@@ -4,9 +4,13 @@ import tensorflow_datasets as tfds
 import tensorflow_probability as tfp
 from tensorflow.keras.datasets import mnist
 from math import ceil
-from adv_autoencoder import AAE
+from AE import AE
 from util import plot_reconst, plot_latent_space
 import datetime
+
+devices = tf.config.list_physical_devices('GPU') 
+print(devices)
+
 
 ### LOGGING ###
 
@@ -19,7 +23,7 @@ train_summary_writer.set_as_default()
 #### HYPERPARAMETERS ###
 
 BATCHSIZE = 400 
-DATASET_REPS = 20
+DATASET_REPS = 50
 
 ### DATA ###
 
@@ -35,8 +39,8 @@ print(f"DATASET SIZE: {n_data}\nBATCHSIZE: {BATCHSIZE}\nDATASET REPS: {DATASET_R
 
 ### MODEL ###
 
-model = AAE()
-optimizer = tf.keras.optimizers.SGD()
+model = AE(n_latent=2)
+optimizer = tf.keras.optimizers.Adam()
 
 ### TRAINING ###
 
@@ -59,4 +63,6 @@ for X in dataset:
     with train_summary_writer.as_default():
         tf.summary.scalar('loss', loss, step=i)
 
-model.save_weights("./mnist_aae" + current_time)
+# save model weights
+model.save_weights("./mnist_autoencoder_2d" + current_time)
+
