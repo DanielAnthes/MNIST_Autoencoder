@@ -1,4 +1,4 @@
-# Collection of Autoencoder Architectures
+[#](#) Collection of Autoencoder Architectures
 
 ## Models (WIP)
 
@@ -11,3 +11,7 @@
 unregularized two dimensional latent space:
 
 ![unregularized latent space](unregularizedlatentspace.png)
+
+2D latent space regularized with 2D gaussian prior:
+
+![2d gaussian regularized latent space](adversarial_latent.png)
