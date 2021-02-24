@@ -1,0 +1,2 @@
+model_checkpoint_path: "mnist_aae20210224-135607"
+all_model_checkpoint_paths: "mnist_aae20210224-135607"
