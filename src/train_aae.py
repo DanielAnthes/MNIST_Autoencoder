@@ -11,7 +11,7 @@ import datetime
 ### LOGGING ###
 
 current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-train_log_dir = 'logs/gradient_tape/' + current_time + '/train'
+train_log_dir = '../logs/gradient_tape/' + current_time + '/train'
 train_summary_writer = tf.summary.create_file_writer(train_log_dir)
 train_summary_writer.set_as_default()
 
@@ -59,4 +59,4 @@ for X in dataset:
     with train_summary_writer.as_default():
         tf.summary.scalar('loss', loss, step=i)
 
-model.save_weights("./mnist_aae" + current_time)
+model.save_weights("../models/mnist_aae" + current_time)
