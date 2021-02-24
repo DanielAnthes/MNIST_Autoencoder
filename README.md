@@ -10,7 +10,4 @@
 
 unregularized two dimensional latent space:
 
-\begin{figure}
-\centering
-\includegraphic[width=200pt]{unregularizedlatentspace.png}
-\end{figure}
+![unregularized latent space](unregularizedlatentspace.png)
