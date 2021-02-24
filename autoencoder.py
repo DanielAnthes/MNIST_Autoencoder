@@ -4,11 +4,11 @@ import tensorflow_probability as tfp
 tfd = tfp.distributions
 
 
-class AAE(tf.keras.Model):
+class Autoencoder(tf.keras.Model):
 
     def __init__(self):
 
-        super(AAE, self).__init__()
+        super(Autoencoder, self).__init__()
 
         self.conv1 = tf.keras.layers.Conv2D(filters=8, kernel_size=3, strides=3, activation='relu') 
         self.conv2 = tf.keras.layers.Conv2D(filters=16, kernel_size=3, strides=3, activation='relu')
