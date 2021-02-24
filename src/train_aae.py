@@ -40,21 +40,14 @@ optimizer = tf.keras.optimizers.Adam()
 
 ### TRAINING ###
 
-def train_step(model, optimizer, X):
-    with tf.GradientTape() as tape:
-        z, r  = model(X)
-        loss = model.loss(X, r)
-    grads = tape.gradient(loss, model.trainable_variables)
-    optimizer.apply_gradients(zip(grads, model.trainable_variables))
-    return loss
-
 
 # training loop
 i = 1
 for X in dataset:
     X = X[:,:,:,None]
     print(f"BATCH: {i}/{n_batch}, NUM IMGS: {X.shape[0]}", end="\r")
-    loss = train_step(model, optimizer, X)
+    loss, grad = model.train_step(X)
+    optimizer.apply_gradients(zip(grad, model.trainable_variables))
     i += 1
     with train_summary_writer.as_default():
         tf.summary.scalar('loss', loss, step=i)

@@ -8,12 +8,16 @@ class AAE(tf.keras.Model):
         # encoder
         self.conv1 = tf.keras.layers.Conv2D(filters=8, kernel_size=4, strides=2, activation='relu')
         self.fc1 = tf.keras.layers.Dense(128, activation='relu')
-        self.fc2 = tf.keras.layers.Dense(2, activation='relu')
+        self.fc2 = tf.keras.layers.Dense(2, activation=None)
 
         # decoder
         self.fc3 = tf.keras.layers.Dense(128, activation='relu')
         self.fc4 = tf.keras.layers.Dense(1352, activation='relu')
-        self.deconv1 = tf.keras.layers.Conv2DTranspose(filters=1, kernel_size=4, strides=2, activation='relu')
+        self.deconv1 = tf.keras.layers.Conv2DTranspose(filters=1, kernel_size=4, strides=2, activation='sigmoid')  # outputs must be pixel intensities between 0 and 1
+
+        # discriminator
+        self.fc5 = tf.keras.layers.Dense(128, activation='relu')
+        self.fc6 = tf.keras.layers.Dense(2, activation=None)
 
     def encode(self,X):
         nbatch = X.shape[0]
@@ -45,5 +49,12 @@ class AAE(tf.keras.Model):
 
     def load(self, name="mnist_aae"):
       self.load_weights(name)
+
+    def train_step(self, X):
+        with tf.GradientTape() as tape:
+            z, r  = self.call(X)
+            loss = self.loss(X, r)
+        grad = tape.gradient(loss, self.trainable_variables)
+        return loss, grad
 
 
