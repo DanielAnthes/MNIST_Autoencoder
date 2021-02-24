@@ -1,13 +1,11 @@
-Œ7IÅU
-*
+‚	ÔaI­
+<
 	conv1
 fc1
 fc2
-deconv1
-
-
-kernel
-bias
+fc3
+fc4
+deconv1
 
 
 kernel
@@ -21,6 +19,18 @@
 
 kernel
 bias
+
+
+kernel
+bias
+
+
+kernel
+bias
+
+
+kernel
+bias
 NL
 VARIABLE_VALUEaae/conv2d/kernel'conv1/kernel/.ATTRIBUTES/VARIABLE_VALUE
 JH
@@ -33,6 +43,14 @@ MK
 VARIABLE_VALUEaae/dense_1/kernel%fc2/kernel/.ATTRIBUTES/VARIABLE_VALUE
 IG
 VARIABLE_VALUEaae/dense_1/bias#fc2/bias/.ATTRIBUTES/VARIABLE_VALUE
+MK
+VARIABLE_VALUEaae/dense_2/kernel%fc3/kernel/.ATTRIBUTES/VARIABLE_VALUE
+IG
+VARIABLE_VALUEaae/dense_2/bias#fc3/bias/.ATTRIBUTES/VARIABLE_VALUE
+MK
+VARIABLE_VALUEaae/dense_3/kernel%fc4/kernel/.ATTRIBUTES/VARIABLE_VALUE
+IG
+VARIABLE_VALUEaae/dense_3/bias#fc4/bias/.ATTRIBUTES/VARIABLE_VALUE
 ZX
 VARIABLE_VALUEaae/conv2d_transpose/kernel)deconv1/kernel/.ATTRIBUTES/VARIABLE_VALUE
 VT

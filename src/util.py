@@ -14,7 +14,7 @@ def plot_latent_space(X, labels):
 
 def plot_reconst(x,r):
     nimgs = x.shape[0]
-    fig = plt.figure()
+    fig = plt.figure(figsize=(12,8))
     for i in range(nimgs):
         plt.subplot(nimgs,2,i*2+1)
         plt.imshow(x[i,:,:])
