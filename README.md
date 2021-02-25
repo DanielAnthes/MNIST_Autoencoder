@@ -1,4 +1,4 @@
-[#](#) Collection of Autoencoder Architectures
+# Collection of Autoencoder Architectures
 
 ## Models (WIP)
 
@@ -6,12 +6,18 @@
 - variational autoencoder
 - adversarial autoencoder
 
-## Latent Space
+### Standard Autoencoder
 
 unregularized two dimensional latent space:
 
 ![unregularized latent space](unregularizedlatentspace.png)
 
+### Adversarial Autoencoder
+
 2D latent space regularized with 2D gaussian prior:
 
 ![2d gaussian regularized latent space](adversarial_latent.png)
+
+Sample reconstructions
+
+![reconstructions](sample_reconstructions_adv_ae.png)
