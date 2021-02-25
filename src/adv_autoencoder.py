@@ -1,5 +1,7 @@
+import datetime
 import tensorflow as tf
 import numpy as np
+from tqdm import tqdm
 
 class AAE(tf.keras.Model):
 
@@ -129,4 +131,30 @@ class AAE(tf.keras.Model):
         del enc_tape
         return enc_loss, disc_loss, enc_grad, disc_grad
         
+    def fit(self, dataset, nfake, autoencoder_optimizer, discriminator_optimizer, train_summary_writer=None):
+        i = 1
+        for X in tqdm(dataset):
+            X = X[:,:,:,None]
+            loss, grad = self.train_autoencoder(X)
+            autoencoder_optimizer.apply_gradients(zip(grad, self.autoencoder_weights))
+            i += 1
+            if train_summary_writer is not None:
+                with train_summary_writer.as_default():
+                    tf.summary.scalar('reconstruction loss', loss, step=i)
+                
+            batchsize = X.shape[0]
+            enc_loss, disc_loss, enc_grad, disc_grad = self.train_GAN(X, n_fakes = batchsize)
+            if tf.math.is_nan(enc_loss) or tf.math.is_nan(disc_loss):
+                print(f"\n\n !!! crash in iteration {i}")
+                raise Exception
+            discriminator_optimizer.apply_gradients(zip(disc_grad, self.discriminator_weights))
+            autoencoder_optimizer.apply_gradients(zip(enc_grad, self.encoder_weights))
+            
+            if train_summary_writer is not None:
+                with train_summary_writer.as_default():
+                    tf.summary.scalar('encoder loss', enc_loss, step=i)
+                    tf.summary.scalar('discriminator loss', disc_loss, step=i)
 
+
+        current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        self.save_weights("../models/mnist_aae" + current_time)
