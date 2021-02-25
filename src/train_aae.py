@@ -39,30 +39,4 @@ model = AAE()
 optimizer = tf.keras.optimizers.Adam()
 
 ### TRAINING ###
-
-# training loop
-i = 1
-for X in dataset:
-    X = X[:,:,:,None]
-    print(f"BATCH: {i}/{n_batch}, NUM IMGS: {X.shape[0]}", end="\r")
-    loss, grad = model.train_autoencoder(X)
-    optimizer.apply_gradients(zip(grad, model.autoencoder_weights))
-    i += 1
-    with train_summary_writer.as_default():
-        tf.summary.scalar('reconstruction loss', loss, step=i)
-    
-    if i % 10 == 0 and i > 0:
-        batchsize = X.shape[0]
-        enc_loss, disc_loss, enc_grad, disc_grad = model.train_GAN(X, n_fakes = batchsize)
-        if tf.math.is_nan(enc_loss) or tf.math.is_nan(disc_loss):
-            print(f"crash in iteration {i}")
-            raise Exception
-        optimizer.apply_gradients(zip(disc_grad, model.discriminator_weights))
-        optimizer.apply_gradients(zip(enc_grad, model.encoder_weights))
-        
-        with train_summary_writer.as_default():
-            tf.summary.scalar('encoder loss', enc_loss, step=i)
-            tf.summary.scalar('discriminator loss', disc_loss, step=i)
-
-
-model.save_weights("../models/mnist_aae" + current_time)
+model.fit(dataset, BATCHSIZE, optimizer, train_summary_writer)
